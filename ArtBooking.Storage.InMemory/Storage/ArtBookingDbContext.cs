@@ -1,3 +1,4 @@
+using ArtBooking.Core.Model;
 using ArtBooking.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,8 @@ public class ArtBookingDbContext : DbContext, IArtBookingStorageContext
     public DbSet<Organization> Organizations { get; set; }
 
     public DbSet<Location> Locations { get; set; }
+
+    public DbSet<Event> Events { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -52,6 +55,23 @@ public class ArtBookingDbContext : DbContext, IArtBookingStorageContext
 
             // Other configurations for Organization
             builder.HasKey(l => l.LocationId);
+        });
+
+        modelBuilder.Entity<Event>(builder =>
+        {
+            // Map Address properties directly inside the Organizations table
+            builder.OwnsOne(o => o.Address, am =>
+            {
+                // Specify the column names if desired, or let EF use default naming conventions
+                am.Property(a => a.Street);
+                am.Property(a => a.Town);
+                am.Property(a => a.AddressNumber);
+                am.Property(a => a.PostalCode);
+                am.Property(a => a.Country);
+            });
+
+            // Other configurations for Organization
+            builder.HasKey(o => o.EventId);
         });
     }
 }
