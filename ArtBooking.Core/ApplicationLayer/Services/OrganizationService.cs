@@ -1,4 +1,7 @@
 namespace ArtBooking.Application;
+
+using ArtBooking.Core.Model;
+using ArtBooking.Core.Repositories;
 using ArtBooking.Model;
 using ArtBooking.Storage;
 
@@ -6,13 +9,15 @@ public class OrganizationService : IOrganizationService
 {
     private readonly IOrganizationRepository _organizations;
     private readonly ILocationRepository _locations;
+    private readonly IEventRepository _events;
 
     private readonly IArtBookingStorageContext _dbContext;
 
-    public OrganizationService(IOrganizationRepository organizationRepository, ILocationRepository locations, IArtBookingStorageContext dbContext)
+    public OrganizationService(IOrganizationRepository organizationRepository, ILocationRepository locations, IEventRepository events, IArtBookingStorageContext dbContext)
     {
         _organizations = organizationRepository;
         _locations = locations;
+        _events = events;
         _dbContext = dbContext;
     }
 
@@ -103,5 +108,10 @@ public class OrganizationService : IOrganizationService
         var organizations = await this.GetMultipleAsync();
         var isUnique = !organizations.Any(o => o.OrganizationName.Equals(item.OrganizationName, StringComparison.InvariantCultureIgnoreCase) && o.OrganizationId != item.OrganizationId);
         return isUnique;
+    }
+
+    public async Task<IQueryable<Event>> GetEventsMultipleAsync()
+    {
+        return await _events.GetMultipleAsync();
     }
 }
