@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ArtBooking.Core\ArtBooking.Core.csproj" />
+    <ProjectReference Include="..\ArtBooking.Storage.Mockup\ArtBooking.Storage.Mockup.csproj" />
+    <ProjectReference Include="..\ArtBooking.Storage.InMemory\ArtBooking.Storage.InMemory.csproj" />
+  </ItemGroup>
+
+</Project>
