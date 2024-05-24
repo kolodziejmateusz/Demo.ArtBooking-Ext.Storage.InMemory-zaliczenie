@@ -1,5 +1,7 @@
+using ArtBooking.Core.Repositories;
 using ArtBooking.Storage;
 using ArtBooking.Storage.InMemory;
+using ArtBooking.Storage.InMemory.Storage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +24,7 @@ public static class DependencyInjectionExtension
 
         // Registering LocationService from bussiness layer.
         services.AddScoped<ILocationRepository, LocationRepositoryInMemory>();
+        services.AddScoped<IEventRepository, EventRepositoryInMemory>();
 
         return services;
     }

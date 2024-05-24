@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ArtBooking.Model;
 using ArtBooking.Application;
+using ArtBooking.Core.Model;
 namespace ArtBooking.Controllers;
 
 [ApiController]
@@ -91,5 +92,11 @@ public class OrganizationController : ControllerBase
         }
 
         return StatusCode((int)result.HttpStatusCode, result.HttpData(true));
+    }
+
+    [HttpGet("event/all")]
+    public async Task<IEnumerable<Event>> GetAllEvent()
+    {
+        return await _organizations.GetEventsMultipleAsync();
     }
 }
